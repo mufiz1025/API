@@ -8,6 +8,6 @@ namespace api.Models
 {
     public class AppUser : IdentityUser
     {
-             
+             public List<PortFolio> PortFolios { get; set; } = new List<PortFolio>();
     }
 }
