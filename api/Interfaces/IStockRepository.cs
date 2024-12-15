@@ -13,6 +13,7 @@ namespace api.Interfaces
        Task<List<Stocks>> GetALLAsync(QueryObject query);
 
        Task<Stocks?> GetByIdAsync(int id);
+       Task<Stocks?> GetBySymbolAsync(string symbol); 
 
        Task<Stocks> CreateAsync(Stocks stockModel);
 
