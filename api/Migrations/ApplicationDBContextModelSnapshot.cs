@@ -51,13 +51,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b51ff84d-3115-4c98-92c8-e3b452060188",
+                            Id = "6b8ffcf4-e66b-4e0d-9e99-d5483b49e9de",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "6dbe5ecc-f395-416a-a5fc-67aae7e82424",
+                            Id = "8e674f04-72f0-4f6e-b67f-81188b605dd1",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -242,6 +242,10 @@ namespace api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -257,6 +261,8 @@ namespace api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("StockId");
 
@@ -365,11 +371,19 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.Comment", b =>
                 {
+                    b.HasOne("api.Models.AppUser", "appUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("api.Models.Stocks", "Stock")
                         .WithMany("Comments")
                         .HasForeignKey("StockId");
 
                     b.Navigation("Stock");
+
+                    b.Navigation("appUser");
                 });
 
             modelBuilder.Entity("api.Models.PortFolio", b =>

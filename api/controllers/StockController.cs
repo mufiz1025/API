@@ -35,7 +35,7 @@ namespace api.controllers
                 return BadRequest(ModelState);
             var stocks =  await _stockRepo.GetALLAsync(query);
 
-            var stockdto = stocks.Select(s => s.ToStockDto());
+            var stockdto = stocks.Select(s => s.ToStockDto()).ToList();
 
             return Ok(stocks);
         }
@@ -94,9 +94,7 @@ namespace api.controllers
 
         private string GetDebuggerDisplay()
         {
-#pragma warning disable CS8603 // Possible null reference return.
             return ToString();
-#pragma warning restore CS8603 // Possible null reference return.
         }
     } 
 }
